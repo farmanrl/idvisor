@@ -98,7 +98,7 @@ class Predict extends Component {
     return (
       <div style={style}>
         <h1>Predict</h1>
-        <div style={ column }>
+        <div style={column}>
           <FormGroup validationState={this.getValidation()}>
             <InputGroup>
               <FormControl

@@ -9,7 +9,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h3>Welcome to Vission</h3>
+          <h3>IDVISOR</h3>
         </div>
         <Navigation />
       </div>
