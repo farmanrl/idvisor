@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Clarifai from 'clarifai';
-import { FormGroup, InputGroup, FormControl, DropdownButton, MenuItem, ControlLabel, Button, Checkbox } from 'react-bootstrap';
+import { FormGroup, InputGroup, FormControl, DropdownButton, MenuItem, ControlLabel, Button, Checkbox, Panel, Well, Col, Grid } from 'react-bootstrap';
 import ColorIcon from './ColorIcon';
 
 const style = {
@@ -10,7 +10,7 @@ const style = {
 }
 
 const column = {
-  maxWidth: 500,
+  maxWidth: 320,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -18,7 +18,6 @@ const column = {
 const colors = {
   display: 'flex',
   flexDirection: 'row',
-  width: 800,
   justifyContent: 'space-around',
   alignItems: 'center',
 }
@@ -96,78 +95,88 @@ class Predict extends Component {
   render() {
     console.log(this.state);
     return (
-      <div style={style}>
+      <Grid>
         <h1>Predict</h1>
-        <div style={column}>
-          <FormGroup validationState={this.getValidation()}>
-            <InputGroup>
-              <FormControl
-                  type="text"
-                  value={this.state.value}
-                  placeholder="Enter url"
-                  onChange={this.handleChange}
-              />
-              <DropdownButton
-                  componentClass={InputGroup.Button}
-                  id="input-dropdown-addon"
-                  title={this.state.model}
-              >
-                <MenuItem
-                    onClick={() => this.setState({ model: 'general'})}
-                    key="general">
-                  General
-                </MenuItem>
-                <MenuItem
-                    onClick={() => this.setState({ model: 'food'})}
-                    key="food">
-                  Food
-                </MenuItem>
-                <MenuItem
-                    onClick={() => this.setState({ model: 'travel'})}
-                    key="travel">
-                  Travel
-                </MenuItem>
-                <MenuItem
-                    onClick={() => this.setState({ model: 'wedding'})}
-                    key="wedding">
-                  Wedding
-                </MenuItem>
-              </DropdownButton>
-            </InputGroup>
-          </FormGroup>
-          <Checkbox
-              checked={this.state.checked}
-              onChange={() => this.setState({ checked: !this.state.checked })}
-          >
-            Colors
-          </Checkbox>
-          <Button type="submit" onClick={this.predict}>
-            Submit
-          </Button>
-          <hr />
-          {this.state.prediction ?
-          <img src={this.state.prediction} style={{ maxWidth: 500 }} role="presentation"/>
-           : null
-          }
+        <Col>
+          <Panel>
+            <h2>Search</h2>
+            <h4>Search through models for image classifications!</h4>
+            <div style={style}>
+              <FormGroup validationState={this.getValidation()}>
+                <InputGroup>
+                  <FormControl
+                      type="text"
+                      value={this.state.value}
+                      placeholder="Enter url"
+                      onChange={this.handleChange}
+                  />
+                  <DropdownButton
+                      componentClass={InputGroup.Button}
+                      id="input-dropdown-addon"
+                      title={this.state.model}
+                  >
+                    <MenuItem
+                        onClick={() => this.setState({ model: 'general'})}
+                        key="general">
+                      General
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() => this.setState({ model: 'food'})}
+                        key="food">
+                      Food
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() => this.setState({ model: 'travel'})}
+                        key="travel">
+                      Travel
+                    </MenuItem>
+                    <MenuItem
+                        onClick={() => this.setState({ model: 'wedding'})}
+                        key="wedding">
+                      Wedding
+                    </MenuItem>
+                  </DropdownButton>
+                </InputGroup>
+              </FormGroup>
+            </div>
+            <Checkbox
+                checked={this.state.checked}
+                onChange={() => this.setState({ checked: !this.state.checked })}
+            >
+              Colors
+            </Checkbox>
+            <Button type="submit" onClick={this.predict}>
+              Submit
+            </Button>
+            {this.state.prediction ?
+             <div>
+               <br />
+               <Well>
+                 <img src={this.state.prediction} style={{ maxWidth: '90%', maxHeight: 200 }} role="presentation"/>
+               </Well>
+             </div>
+             : null
+            }
         <br />
         <div style={ colors }>
-           {this.state.colors ?
-            this.state.colors.map((color, index) => (
+          {this.state.colors ?
+           this.state.colors.map((color, index) => (
              <ColorIcon name={color.w3c.name} hex={color.w3c.hex} key={index} />
            ))
            : null
           }
-          </div>
-          {this.state.concepts ?
-           this.state.concepts.map((concept, index) => (
-             <div key={index}>
-               <h4>{concept.name}</h4>
-               <h5>{concept.value}</h5>
-             </div>
-           ))
-          : null}
         </div>
-      </div>
+        {this.state.concepts ?
+         this.state.concepts.map((concept, index) => (
+           <div key={index}>
+             <h4>{concept.name}</h4>
+             <h5>{concept.value}</h5>
+           </div>
+         ))
+         : null}
+          </Panel>
+        </Col>
+      </Grid>
     );
   }
 }
