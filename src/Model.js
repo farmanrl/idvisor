@@ -11,10 +11,12 @@ const style = {
 }
 
 const column = {
-  maxWidth: 320,
+  width: 150,
+  maxHeight: 320,
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
+  overflowY: 'scroll',
 }
 
 const array = {
@@ -26,7 +28,7 @@ const array = {
 }
 
 const row = {
-  maxWidth: '95%',
+  maxWidth: '90%',
   overflowX: 'scroll',
   display: 'flex',
 }
@@ -50,8 +52,7 @@ const colImg = {
 
 const view = {
   display: 'flex',
-  justifyContent: 'space-between',
-  width: '90%'
+  alignItems: 'center',
 }
 
 
@@ -239,10 +240,10 @@ class Model extends Component {
                 <Button type="submit" onClick={this.add}>
                   Submit
                 </Button>
+                <br />
                 {this.state.inputArray.length > 0 ?
-                 <div>
+                 <div style={row}>
                    <br />
-                   <div style={row}>
                      {this.state.inputArray.length > 0 ?
                       this.state.inputArray.map((input, index) => (
                         <Well key={index} bsSize="small">
@@ -260,7 +261,6 @@ class Model extends Component {
                       ))
                     : null
                    }
-                   </div>
                  </div>
                  : null}
               </div>
@@ -286,34 +286,36 @@ class Model extends Component {
                 View
               </Button>
               {(this.state.trueArray.length > 0 || this.state.falseArray.length > 0) ?
-               <div style={style}>
-                 <div style={view}>
-                   <div>
-                     <h4>True</h4>
-                     <div style={array}>
-                       {this.state.trueArray ?
-                        this.state.trueArray.map((item, index) => (
-                          <img src={item} style={colImg} role="presentation" />
-                        ))
-                        : null}
+               <Well>
+                 <div style={style}>
+                   <div style={view}>
+                     <div>
+                       <h4>True</h4>
+                       <div style={column}>
+                         {this.state.trueArray ?
+                          this.state.trueArray.map((item, index) => (
+                            <img src={item} style={colImg} role="presentation" />
+                          ))
+                          : null}
+                       </div>
+                     </div>
+                     <div>
+                       <h4>False</h4>
+                       <div style={column}>
+                         {this.state.falseArray ?
+                          this.state.falseArray.map((item, index) => (
+                            <img src={item} style={colImg} role="presentation" />
+                          ))
+                          : null}
+                       </div>
                      </div>
                    </div>
-                   <div>
-                     <h4>False</h4>
-                     <div style={array}>
-                       {this.state.falseArray ?
-                        this.state.falseArray.map((item, index) => (
-                          <img src={item} style={colImg} role="presentation" />
-                        ))
-                        : null}
-                     </div>
-                   </div>
+                   <br />
+                   <Button type="submit" bsStyle="danger" onClick={this.close}>
+                     Close
+                   </Button>
                  </div>
-                 <br />
-                 <Button type="submit" bsStyle="danger" onClick={this.close}>
-                   Close
-                 </Button>
-               </div>
+               </Well>
                : null}
             </Panel>
           </Col>

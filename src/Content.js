@@ -14,10 +14,10 @@ class Content extends Component {
   render() {
     return (
       <div>
-        {this.props.active === 'predict' &&
+        {this.props.active === 'search' &&
         <Predict app={app} />
         }
-        {this.props.active === 'search' &&
+        {this.props.active === 'about' &&
         <Search app={app} />
         }
         {this.props.active === 'model' &&

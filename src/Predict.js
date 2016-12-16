@@ -96,7 +96,7 @@ class Predict extends Component {
     console.log(this.state);
     return (
       <Grid>
-        <h1>Predict</h1>
+        <h1>Image Recognition</h1>
         <Col>
           <Panel>
             <h2>Search</h2>
